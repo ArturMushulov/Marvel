@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import useMarvelService from '../../services/MarvelService';
 import PropTypes from 'prop-types';
 
@@ -73,18 +74,21 @@ const View = ({char}) => {
                 </div>
                 <div className="char__comics">Comics:</div>
                 <ul className="char__comics-list">
-                    {comics.lenght > 0 ? null : 'There is no comics... Come back later'}
-                    {
-                        comics.map((item, i) => {
-                            if (i > 9) return;
-                                return (
-                                    <li key={i} onClick={item.url} className="char__comics-item">
-                                        {item.name}
-                                    </li>
-                                ) 
-                        })
-                    }               
-                </ul>
+                {comics.length > 0 ? null : 'There is no comics with this character'}
+                {
+                    comics.map((item, i) => {
+                        // eslint-disable-next-line
+                        if (i > 9) return;
+                        return (
+                            <li key={i} className="char__comics-item">
+                                <Link to={`/comics/${item.resourceURI.substring(43)}`}>
+                                    {item.name}
+                                </Link>
+                            </li>
+                        )
+                    })
+                }                
+            </ul>
         </>
     )
 }
